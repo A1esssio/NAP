@@ -1,0 +1,593 @@
+:root {
+    --bg-color: #000000;
+    --text-white: #ffffff;
+    --text-gray: #8b939b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: 'Barlow', sans-serif;
+    color: var(--text-white);
+    overflow-x: hidden;
+}
+
+/* --- КНОПКИ LIQUID GLASS --- */
+.key {
+    background: rgba(0, 0, 0, 0.85);
+    border: none;
+    color: var(--text-white);
+    padding: 25px 0;
+    font-family: 'Barlow', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.2s;
+    outline: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: rgba(255, 255, 255, 0.1);
+    width: 200px;
+    height: 200px;
+    pointer-events: none;
+    backdrop-filter: blur(4px) brightness(1.3);
+    -webkit-backdrop-filter: blur(4px) brightness(1.3);
+    animation: liquid-ripple 0.6s linear;
+}
+
+@keyframes liquid-ripple {
+    to {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0;
+    }
+}
+
+.key:hover {
+    background: rgba(40, 40, 40, 0.95);
+    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.05);
+}
+
+.key:active {
+    background: #000;
+}
+
+.key.zero {
+    grid-column: span 2;
+}
+
+.key.action-submit {
+    background: rgba(255, 255, 255, 0.1);
+    font-weight: 600;
+}
+
+/* --- ФОН: ЗВЕЗДЫ И МАРС --- */
+.stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: -2;
+    transition: opacity 0.1s linear;
+}
+
+.stars-container::after,
+.stars-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(1px 1px at 5% 10%, #fff, transparent), radial-gradient(1px 1px at 15% 45%, #fff, transparent), radial-gradient(1px 1px at 25% 15%, #fff, transparent), radial-gradient(1px 1px at 35% 50%, #fff, transparent), radial-gradient(1px 1px at 45% 20%, #fff, transparent), radial-gradient(1px 1px at 55% 60%, #fff, transparent), radial-gradient(1px 1px at 65% 30%, #fff, transparent), radial-gradient(1px 1px at 75% 70%, #fff, transparent), radial-gradient(1px 1px at 85% 40%, #fff, transparent), radial-gradient(1px 1px at 95% 80%, #fff, transparent), radial-gradient(2px 2px at 10% 85%, #fff, transparent), radial-gradient(2px 2px at 30% 25%, #fff, transparent), radial-gradient(2px 2px at 50% 75%, #fff, transparent), radial-gradient(2px 2px at 70% 35%, #fff, transparent), radial-gradient(2px 2px at 90% 10%, #fff, transparent);
+    background-size: 550px 550px;
+    opacity: 0.8;
+}
+
+.stars-container::after {
+    background-size: 350px 350px;
+    transform: rotate(45deg);
+    animation: twinkle 4s infinite ease-in-out;
+}
+
+.stars-container::before {
+    background-size: 450px 450px;
+    transform: rotate(-15deg);
+    animation: twinkle 6s infinite ease-in-out reverse;
+    opacity: 0.6;
+}
+
+@keyframes twinkle {
+
+    0%,
+    100% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.meteor-shower {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    transform: rotate(-25deg);
+    opacity: 0;
+    animation: shower-cycle 25s infinite ease-in-out;
+    transition: opacity 0.1s linear;
+}
+
+@keyframes shower-cycle {
+
+    0%,
+    40% {
+        opacity: 0;
+    }
+
+    50%,
+    70% {
+        opacity: 1;
+    }
+
+    80%,
+    100% {
+        opacity: 0;
+    }
+}
+
+.meteor {
+    position: absolute;
+    top: -150px;
+    width: 1px;
+    height: 150px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+    opacity: 0;
+    filter: drop-shadow(0 0 6px white);
+    animation: meteor-fall 4s linear infinite;
+}
+
+.meteor:nth-child(1) {
+    left: 10%;
+    animation-duration: 3s;
+    animation-delay: 0s;
+}
+
+.meteor:nth-child(2) {
+    left: 30%;
+    animation-duration: 4s;
+    animation-delay: 2s;
+}
+
+.meteor:nth-child(3) {
+    left: 50%;
+    animation-duration: 2.5s;
+    animation-delay: 1.5s;
+}
+
+.meteor:nth-child(4) {
+    left: 70%;
+    animation-duration: 3.5s;
+    animation-delay: 0.5s;
+}
+
+.meteor:nth-child(5) {
+    left: 90%;
+    animation-duration: 4.5s;
+    animation-delay: 3s;
+}
+
+.meteor:nth-child(6) {
+    left: 20%;
+    animation-duration: 3.2s;
+    animation-delay: 4.2s;
+}
+
+.meteor:nth-child(7) {
+    left: 80%;
+    animation-duration: 2.8s;
+    animation-delay: 1.8s;
+}
+
+@keyframes meteor-fall {
+    0% {
+        transform: translateY(-150px);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(150vh);
+        opacity: 0;
+    }
+}
+
+.background-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    transition: opacity 0.1s linear;
+}
+
+.mars-planet {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: url('mars.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+.vignette {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 40%, #000000 95%);
+    pointer-events: none;
+}
+
+/* --- ШАПКА --- */
+.spacex-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 40px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: 12px;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-menu a {
+    color: var(--text-white);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: white;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.nav-menu a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.burger-menu {
+    display: none;
+    width: 20px;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.burger-menu span {
+    width: 100%;
+    height: 2px;
+    background: white;
+}
+
+/* --- ПЕРВЫЙ ЭКРАН --- */
+.mission-control {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.content-wrapper {
+    text-align: center;
+    margin-top: 60px;
+}
+
+.section-subtitle {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    color: var(--text-gray);
+    margin-bottom: 10px;
+    animation: fadeUp 1s ease forwards;
+}
+
+.section-title {
+    font-size: 48px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    animation: fadeUp 1s ease 0.2s forwards;
+    opacity: 0;
+}
+
+.calculator-interface {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 2px;
+    width: 360px;
+    margin: 0 auto;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.4s forwards;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.display-panel {
+    background: rgba(20, 20, 20, 0.9);
+    padding: 25px;
+    text-align: right;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.display-label {
+    display: block;
+    font-size: 10px;
+    color: var(--text-gray);
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+}
+
+.display-value {
+    font-size: 36px;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    padding-top: 1px;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.6;
+    cursor: pointer;
+    z-index: 20;
+}
+
+.chevron {
+    width: 15px;
+    height: 15px;
+    border-bottom: 2px solid white;
+    border-right: 2px solid white;
+    transform: rotate(45deg);
+    margin: -5px;
+    animation: scroll 2s infinite;
+}
+
+.chevron:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.chevron:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes scroll {
+    0% {
+        opacity: 0;
+        transform: rotate(45deg) translate(-5px, -5px);
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+}
+
+/* --- ВТОРОЙ ЭКРАН (ВИДЕО ПОСАДКИ) --- */
+.landing-section {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: #000;
+    overflow: hidden;
+}
+
+/* Блок с видео, изначально скрыт и немного увеличен */
+.video-block {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0;
+    transform: scale(1.1);
+    transition: opacity 1.5s ease-out, transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.video-block.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.video-block video {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    pointer-events: none;
+}
+
+/* Затемнение видео, чтобы текст был белым и читаемым */
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+}
+
+/* Текст поверх видео */
+.landing-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1s ease 0.6s;
+}
+
+.landing-content.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- КНОПКА ЗВУКА --- */
+.mute-btn {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    cursor: pointer;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.mute-btn.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s ease 1s, transform 0.5s ease 1s, background 0.3s, transform 0.3s;
+}
+
+.mute-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
+}
+
+.mute-btn svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* АДАПТИВНОСТЬ */
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+    }
+
+    .burger-menu {
+        display: flex;
+    }
+
+    .spacex-header {
+        padding: 20px;
+    }
+
+    .section-title {
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+
+    .calculator-interface {
+        width: 90%;
+    }
+
+    .mute-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .mute-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+}

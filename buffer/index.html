@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SpaceX | Mission Control</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- Шрифт Barlow (аналог фирменного DIN) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- Фон: Марс и звезды -->
+    <div class="background-layer">
+        <div class="stars"></div>
+        <div class="mars-planet"></div>
+        <div class="vignette"></div>
+    </div>
+
+    <!-- Шапка сайта (как на spacex.com) -->
+    <header class="spacex-header">
+        <div class="logo">SPACEX</div>
+        <nav class="nav-menu">
+            <a href="#">FALCON 9</a>
+            <a href="#">FALCON HEAVY</a>
+            <a href="#">DRAGON</a>
+            <a href="#">STARSHIP</a>
+            <a href="#">HUMAN SPACEFLIGHT</a>
+        </nav>
+        <div class="burger-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <!-- Основной контент: Калькулятор -->
+    <main class="mission-control">
+        <div class="content-wrapper">
+            <h2 class="section-subtitle">MISSION CONTROL</h2>
+            <h1 class="section-title">TRAJECTORY CALCULATION</h1>
+
+            <div class="calculator-interface">
+                <div class="display-panel">
+                    <span class="display-label">INPUT STREAM</span>
+                    <div class="display-value">0</div>
+                </div>
+
+                <div class="keypad">
+                    <button class="key action-clear">CLR</button>
+                    <button class="key action-op">/</button>
+                    <button class="key action-op">*</button>
+                    <button class="key action-op">-</button>
+
+                    <button class="key num">7</button>
+                    <button class="key num">8</button>
+                    <button class="key num">9</button>
+                    <button class="key action-op">+</button>
+
+                    <button class="key num">4</button>
+                    <button class="key num">5</button>
+                    <button class="key num">6</button>
+                    <button class="key action-row2 action-op">%</button>
+
+                    <button class="key num">1</button>
+                    <button class="key num">2</button>
+                    <button class="key num">3</button>
+                    <button class="key action-row2 action-op">.</button>
+
+                    <button class="key num zero">0</button>
+                    <button class="key action-submit">=</button>
+                </div>
+            </div>
+
+            <div class="scroll-indicator">
+                <div class="chevron"></div>
+                <div class="chevron"></div>
+                <div class="chevron"></div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,361 @@
+:root {
+    --bg-color: #000000;
+    --text-white: #ffffff;
+    --text-gray: #8b939b;
+    /* Цвет текста меню SpaceX */
+    --border-color: rgba(255, 255, 255, 0.4);
+    /* Полупрозрачные рамки */
+    --hover-bg: rgba(255, 255, 255, 0.1);
+    --dragon-blue: #005288;
+    /* Акцент из интерфейса Dragon */
+    --mars-orange: #cc8444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: 'Barlow', sans-serif;
+    color: var(--text-white);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- ФОНОВЫЕ СЛОИ --- */
+.background-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* Звезды через градиент (без JS) */
+.stars {
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(1px 1px at 10% 20%, white, transparent),
+        radial-gradient(1px 1px at 30% 60%, white, transparent),
+        radial-gradient(2px 2px at 50% 30%, white, transparent),
+        radial-gradient(1px 1px at 80% 10%, white, transparent),
+        radial-gradient(1px 1px at 90% 80%, white, transparent);
+    background-size: 550px 550px;
+    opacity: 0.8;
+}
+
+/* Марс */
+.mars-planet {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: url('mars.jpg') no-repeat center center;
+    background-size: cover;
+    /* Заполняет экран как на сайте */
+    z-index: -1;
+}
+
+/* Затемнение по краям (виньетка) */
+.vignette {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 40%, #000000 95%);
+    pointer-events: none;
+}
+
+/* --- ШАПКА (HEADER) --- */
+.spacex-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 40px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: 12px;
+    /* Фирменный широкий трекинг */
+    text-transform: uppercase;
+    position: relative;
+    top: -2px;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-menu a {
+    color: var(--text-white);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: white;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.nav-menu a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* Бургер меню (для мобильных) */
+.burger-menu {
+    display: none;
+    /* Скрыто на десктопе */
+    width: 20px;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.burger-menu span {
+    width: 100%;
+    height: 2px;
+    background: white;
+}
+
+/* --- КАЛЬКУЛЯТОР --- */
+.mission-control {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.content-wrapper {
+    text-align: center;
+    margin-top: 60px;
+    /* Отступ от шапки */
+}
+
+.section-subtitle {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    color: var(--text-gray);
+    margin-bottom: 10px;
+    animation: fadeUp 1s ease forwards;
+}
+
+.section-title {
+    font-size: 48px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    animation: fadeUp 1s ease 0.2s forwards;
+    opacity: 0;
+}
+
+/* Интерфейс калькулятора (Dragon UI Style) */
+.calculator-interface {
+    background: rgba(0, 0, 0, 0.7);
+    /* Темный полупрозрачный фон */
+    backdrop-filter: blur(15px);
+    /* Размытие фона под калькулятором */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 2px;
+    /* Эффект двойной рамки */
+    width: 360px;
+    margin: 0 auto;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.4s forwards;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.display-panel {
+    background: rgba(20, 20, 20, 0.9);
+    padding: 25px;
+    text-align: right;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.display-label {
+    display: block;
+    font-size: 10px;
+    color: var(--text-gray);
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.display-value {
+    font-size: 36px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    color: var(--text-white);
+}
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* Убираем отступы между кнопками для монолитного вида */
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    /* Цвет линий сетки */
+    padding-top: 1px;
+}
+
+.key {
+    background: rgba(0, 0, 0, 0.85);
+    border: none;
+    color: var(--text-white);
+    padding: 25px 0;
+    font-family: 'Barlow', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.2s;
+    outline: none;
+}
+
+.key:hover {
+    background: rgba(40, 40, 40, 0.95);
+    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.05);
+}
+
+.key:active {
+    background: #000;
+}
+
+/* Стилизация особых кнопок */
+.action-clear {
+    color: var(--text-gray);
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.action-op {
+    color: var(--text-gray);
+}
+
+.action-submit {
+    background: rgba(255, 255, 255, 0.1);
+    /* Слегка светлее */
+    font-weight: 600;
+}
+
+.action-submit:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.key.zero {
+    grid-column: span 2;
+}
+
+/* Анимация появления */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Индикатор скролла внизу */
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.6;
+}
+
+.chevron {
+    width: 15px;
+    height: 15px;
+    border-bottom: 2px solid white;
+    border-right: 2px solid white;
+    transform: rotate(45deg);
+    margin: -5px;
+    animation: scroll 2s infinite;
+}
+
+.chevron:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.chevron:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes scroll {
+    0% {
+        opacity: 0;
+        transform: rotate(45deg) translate(-5px, -5px);
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+    }
+
+    .burger-menu {
+        display: flex;
+    }
+
+    .spacex-header {
+        padding: 20px;
+    }
+
+    .section-title {
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+
+    .calculator-interface {
+        width: 90%;
+    }
+}
