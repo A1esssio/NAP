@@ -272,11 +272,16 @@ body {
     z-index: 100;
 }
 
-.logo {
-    font-weight: 700;
-    font-size: 28px;
-    letter-spacing: 12px;
+
+.logo img {
+    height: 24px;
+    /* уменьши/увеличь по вкусу: 24, 28, 32 и т.д. */
+    width: auto;
+    /* ширина подстроится пропорционально */
+    display: block;
+    /* чтобы не было лишних отступов снизу */
 }
+
 
 .nav-menu {
     display: flex;
