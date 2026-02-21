@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>SpaceX | Mission Control</title>
-        <link rel="stylesheet" href="main.css" />
+        <link rel="stylesheet" href="css/main.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -35,14 +35,16 @@
         <!-- Шапка -->
         <header class="spacex-header">
             <div class="logo">
-                <img src="images/SpaceX_Logo_Black.png" alt="SPACEX" />
+                <a href="index.html">
+                    <img src="image/SpaceX_Logo_Black.png" alt="SPACEX" />
+                </a>
             </div>
             <nav class="nav-menu">
                 <a href="#">FALCON 9</a>
                 <a href="#">FALCON HEAVY</a>
                 <a href="#">DRAGON</a>
                 <a href="#">STARSHIP</a>
-                <a href="about_me.html">ABOUT ME</a>
+                <a href="about.html">ABOUT ME</a>
             </nav>
             <div class="burger-menu">
                 <span></span>
@@ -103,7 +105,7 @@
             <div class="video-block" id="rocket-video-container">
                 <!-- Локальное видео (обязательно muted для автозапуска в браузерах) -->
                 <video id="rocket-video" autoplay loop muted playsinline>
-                    <source src="videos/rocket-landing.mp4" type="video/mp4" />
+                    <source src="video/rocket-landing.mp4" type="video/mp4" />
                 </video>
                 <!-- Затемняющий слой поверх видео, чтобы текст читался -->
                 <div class="video-overlay"></div>
@@ -155,6 +157,6 @@
         </section>
 
         <!-- Скрипты -->
-        <script src="main.js"></script></script>
+        <script src="js/main.js"></script>
     </body>
 </html>
