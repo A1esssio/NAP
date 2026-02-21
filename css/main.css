@@ -396,6 +396,7 @@ body {
     padding: 25px;
     text-align: right;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
 }
 
 .display-label {
@@ -410,6 +411,12 @@ body {
     font-size: 36px;
     font-weight: 300;
     letter-spacing: 2px;
+    width: 100%;
+    display: block;
+    text-align: right; /* цифры прижаты к правому краю */
+    white-space: nowrap; /* всё в одну строку */
+    overflow: hidden; /* обрезать лишнее */
+    text-overflow: ellipsis; /* вместо лишних символов ставит … */
 }
 
 .keypad {

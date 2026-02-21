@@ -21,7 +21,7 @@ buttons.forEach((btn) => {
     });
 });
 
-// --- 2. Эффект исчезновения звезд и Марса при прокрутке ---
+// --- 2. Эффект исчезновения звезд при прокрутке ---
 const stars = document.getElementById("stars");
 const meteors = document.getElementById("meteors");
 const marsBg = document.getElementById("mars-bg");
@@ -86,3 +86,110 @@ muteBtn.addEventListener("click", () => {
         iconUnmuted.style.display = "block";
     }
 });
+
+// =========================
+// 6. Логика калькулятора
+// =========================
+
+const display = document.querySelector(".display-value");
+
+let displayValue = "0"; // что показывается на экране
+let firstOperand = null; // первое число
+let operator = null; // + - * / %
+let waitingForNext = false; // нажат оператор, ждём второе число
+
+// ----- отображение -----
+function updateDisplay() {
+    // пока ждём второе число — показываем оператор
+    display.textContent = waitingForNext ? operator : displayValue;
+}
+updateDisplay();
+
+// ----- клики -----
+buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+        if (btn.classList.contains("num")) inputDigit(btn.textContent.trim());
+        else if (btn.classList.contains("action-op"))
+            chooseOperator(btn.textContent.trim());
+        else if (btn.classList.contains("action-clear")) clearAll();
+        else if (btn.classList.contains("action-submit")) compute();
+
+        updateDisplay();
+    });
+});
+
+// ----- ввод цифр и точки -----
+function inputDigit(digit) {
+    if (waitingForNext) {
+        // начинаем новое число после оператора
+        displayValue = digit === "." ? "0." : digit;
+        waitingForNext = false;
+        return;
+    }
+
+    if (digit === ".") {
+        if (!displayValue.includes(".")) displayValue += ".";
+        return;
+    }
+
+    displayValue = displayValue === "0" ? digit : displayValue + digit;
+}
+
+// ----- выбор оператора -----
+function chooseOperator(op) {
+    const current = parseFloat(displayValue);
+
+    if (firstOperand !== null && !waitingForNext) {
+        // цепочка операций: сразу считаем накопленное
+        const result = calculate(firstOperand, current, operator);
+        displayValue = String(round(result));
+        firstOperand = round(result);
+    } else {
+        firstOperand = current;
+    }
+
+    operator = op;
+    waitingForNext = true;
+}
+
+// ----- равно -----
+function compute() {
+    if (operator === null || firstOperand === null || waitingForNext) return;
+
+    const result = calculate(firstOperand, parseFloat(displayValue), operator);
+    displayValue = String(round(result));
+    firstOperand = null;
+    operator = null;
+    waitingForNext = false;
+}
+
+// ----- сброс -----
+function clearAll() {
+    displayValue = "0";
+    firstOperand = null;
+    operator = null;
+    waitingForNext = false;
+}
+
+// ----- арифметика -----
+function calculate(a, b, op) {
+    switch (op) {
+        case "+":
+            return a + b;
+        case "-":
+            return a - b;
+        case "*":
+            return a * b;
+        case "/":
+            return b === 0 ? 0 : a / b;
+        case "%":
+            return a % b;
+        default:
+            return b;
+    }
+}
+
+// убираем мусор вроде 0.1 + 0.2 = 0.30000000000000004
+function round(n) {
+    return parseFloat(n.toPrecision(10));
+}
