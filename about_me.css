@@ -12,11 +12,10 @@
 
 body {
     background-color: var(--bg-color);
-    font-family: 'Barlow', sans-serif;
+    font-family: "Barlow", sans-serif;
     color: var(--text-white);
     overflow-x: hidden;
 }
-
 
 /* --- ФОН: ЗВЕЗДЫ И МАРС --- */
 .stars-container {
@@ -38,7 +37,22 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: radial-gradient(1px 1px at 5% 10%, #fff, transparent), radial-gradient(1px 1px at 15% 45%, #fff, transparent), radial-gradient(1px 1px at 25% 15%, #fff, transparent), radial-gradient(1px 1px at 35% 50%, #fff, transparent), radial-gradient(1px 1px at 45% 20%, #fff, transparent), radial-gradient(1px 1px at 55% 60%, #fff, transparent), radial-gradient(1px 1px at 65% 30%, #fff, transparent), radial-gradient(1px 1px at 75% 70%, #fff, transparent), radial-gradient(1px 1px at 85% 40%, #fff, transparent), radial-gradient(1px 1px at 95% 80%, #fff, transparent), radial-gradient(2px 2px at 10% 85%, #fff, transparent), radial-gradient(2px 2px at 30% 25%, #fff, transparent), radial-gradient(2px 2px at 50% 75%, #fff, transparent), radial-gradient(2px 2px at 70% 35%, #fff, transparent), radial-gradient(2px 2px at 90% 10%, #fff, transparent);
+    background-image:
+        radial-gradient(1px 1px at 5% 10%, #fff, transparent),
+        radial-gradient(1px 1px at 15% 45%, #fff, transparent),
+        radial-gradient(1px 1px at 25% 15%, #fff, transparent),
+        radial-gradient(1px 1px at 35% 50%, #fff, transparent),
+        radial-gradient(1px 1px at 45% 20%, #fff, transparent),
+        radial-gradient(1px 1px at 55% 60%, #fff, transparent),
+        radial-gradient(1px 1px at 65% 30%, #fff, transparent),
+        radial-gradient(1px 1px at 75% 70%, #fff, transparent),
+        radial-gradient(1px 1px at 85% 40%, #fff, transparent),
+        radial-gradient(1px 1px at 95% 80%, #fff, transparent),
+        radial-gradient(2px 2px at 10% 85%, #fff, transparent),
+        radial-gradient(2px 2px at 30% 25%, #fff, transparent),
+        radial-gradient(2px 2px at 50% 75%, #fff, transparent),
+        radial-gradient(2px 2px at 70% 35%, #fff, transparent),
+        radial-gradient(2px 2px at 90% 10%, #fff, transparent);
     background-size: 550px 550px;
     opacity: 0.8;
 }
@@ -57,7 +71,6 @@ body {
 }
 
 @keyframes twinkle {
-
     0%,
     100% {
         opacity: 0.4;
@@ -84,7 +97,6 @@ body {
 }
 
 @keyframes shower-cycle {
-
     0%,
     40% {
         opacity: 0;
@@ -106,7 +118,11 @@ body {
     top: -150px;
     width: 1px;
     height: 150px;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 1)
+    );
     opacity: 0;
     filter: drop-shadow(0 0 6px white);
     animation: meteor-fall 4s linear infinite;
@@ -231,7 +247,7 @@ body {
 }
 
 .nav-menu a::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -5px;
     left: 0;

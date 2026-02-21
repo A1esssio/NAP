@@ -1,229 +1,256 @@
 <!doctype html>
 <html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>SpaceX | Mission Control</title>
+        <link rel="stylesheet" href="main.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700&display=swap"
+            rel="stylesheet"
+        />
+    </head>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SpaceX | Mission Control</title>
-    <link rel="stylesheet" href="main.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700&display=swap" rel="stylesheet" />
-</head>
+    <body>
+        <!-- Фоновые эффекты космоса -->
+        <div class="stars-container" id="stars"></div>
 
-<body>
-    <!-- Фоновые эффекты космоса -->
-    <div class="stars-container" id="stars"></div>
-
-    <div class="meteor-shower" id="meteors">
-        <div class="meteor"></div>
-        <div class="meteor"></div>
-        <div class="meteor"></div>
-        <div class="meteor"></div>
-        <div class="meteor"></div>
-        <div class="meteor"></div>
-        <div class="meteor"></div>
-    </div>
-
-    <div class="background-layer" id="mars-bg">
-        <div class="mars-planet"></div>
-        <div class="vignette"></div>
-    </div>
-
-    <!-- Шапка -->
-    <header class="spacex-header">
-        <div class="logo">
-            <a href="index.html">
-                <img src="images/SpaceX_Logo_Black.png" alt="SPACEX" />
-            </a>
+        <div class="meteor-shower" id="meteors">
+            <div class="meteor"></div>
+            <div class="meteor"></div>
+            <div class="meteor"></div>
+            <div class="meteor"></div>
+            <div class="meteor"></div>
+            <div class="meteor"></div>
+            <div class="meteor"></div>
         </div>
-        <nav class="nav-menu">
-            <a href="#">FALCON 9</a>
-            <a href="#">FALCON HEAVY</a>
-            <a href="#">DRAGON</a>
-            <a href="#">STARSHIP</a>
-            <a href="about_me.html">ABOUT ME</a>
-        </nav>
-        <div class="burger-menu">
-            <span></span>
-            <span></span>
-            <span></span>
+
+        <div class="background-layer" id="mars-bg">
+            <div class="mars-planet"></div>
+            <div class="vignette"></div>
         </div>
-    </header>
 
-    <!-- Первый экран: Калькулятор -->
-    <main class="mission-control">
-        <div class="content-wrapper">
-            <h2 class="section-subtitle">MISSION CONTROL</h2>
-            <h1 class="section-title">TRAJECTORY CALCULATION</h1>
+        <!-- Шапка -->
+        <header class="spacex-header">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/SpaceX_Logo_Black.png" alt="SPACEX" />
+                </a>
+            </div>
+            <nav class="nav-menu">
+                <a href="#">FALCON 9</a>
+                <a href="#">FALCON HEAVY</a>
+                <a href="#">DRAGON</a>
+                <a href="#">STARSHIP</a>
+                <a href="about_me.html">ABOUT ME</a>
+            </nav>
+            <div class="burger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </header>
 
-            <div class="calculator-interface">
-                <div class="display-panel">
-                    <span class="display-label">INPUT STREAM</span>
-                    <div class="display-value">0</div>
+        <!-- Первый экран: Калькулятор -->
+        <main class="mission-control">
+            <div class="content-wrapper">
+                <h2 class="section-subtitle">MISSION CONTROL</h2>
+                <h1 class="section-title">TRAJECTORY CALCULATION</h1>
+
+                <div class="calculator-interface">
+                    <div class="display-panel">
+                        <span class="display-label">INPUT STREAM</span>
+                        <div class="display-value">0</div>
+                    </div>
+
+                    <div class="keypad">
+                        <button class="key action-clear">CLR</button>
+                        <button class="key action-op">/</button>
+                        <button class="key action-op">*</button>
+                        <button class="key action-op">-</button>
+
+                        <button class="key num">7</button>
+                        <button class="key num">8</button>
+                        <button class="key num">9</button>
+                        <button class="key action-op">+</button>
+
+                        <button class="key num">4</button>
+                        <button class="key num">5</button>
+                        <button class="key num">6</button>
+                        <button class="key action-row2 action-op">%</button>
+
+                        <button class="key num">1</button>
+                        <button class="key num">2</button>
+                        <button class="key num">3</button>
+                        <button class="key action-row2 action-op">.</button>
+
+                        <button class="key num zero">0</button>
+                        <button class="key action-submit">=</button>
+                    </div>
                 </div>
 
-                <div class="keypad">
-                    <button class="key action-clear">CLR</button>
-                    <button class="key action-op">/</button>
-                    <button class="key action-op">*</button>
-                    <button class="key action-op">-</button>
-
-                    <button class="key num">7</button>
-                    <button class="key num">8</button>
-                    <button class="key num">9</button>
-                    <button class="key action-op">+</button>
-
-                    <button class="key num">4</button>
-                    <button class="key num">5</button>
-                    <button class="key num">6</button>
-                    <button class="key action-row2 action-op">%</button>
-
-                    <button class="key num">1</button>
-                    <button class="key num">2</button>
-                    <button class="key num">3</button>
-                    <button class="key action-row2 action-op">.</button>
-
-                    <button class="key num zero">0</button>
-                    <button class="key action-submit">=</button>
+                <div class="scroll-indicator" id="scroll-down">
+                    <div class="chevron"></div>
+                    <div class="chevron"></div>
+                    <div class="chevron"></div>
                 </div>
             </div>
+        </main>
 
-            <div class="scroll-indicator" id="scroll-down">
-                <div class="chevron"></div>
-                <div class="chevron"></div>
-                <div class="chevron"></div>
+        <!-- Второй экран: Приземление -->
+        <section class="landing-section" id="landing-zone">
+            <!-- Контейнер с видео -->
+            <div class="video-block" id="rocket-video-container">
+                <!-- Локальное видео (обязательно muted для автозапуска в браузерах) -->
+                <video id="rocket-video" autoplay loop muted playsinline>
+                    <source src="videos/rocket-landing.mp4" type="video/mp4" />
+                </video>
+                <!-- Затемняющий слой поверх видео, чтобы текст читался -->
+                <div class="video-overlay"></div>
             </div>
-        </div>
-    </main>
 
-    <!-- Второй экран: Приземление -->
-    <section class="landing-section" id="landing-zone">
-        <!-- Контейнер с видео -->
-        <div class="video-block" id="rocket-video-container">
-            <!-- Локальное видео (обязательно muted для автозапуска в браузерах) -->
-            <video id="rocket-video" autoplay loop muted playsinline>
-                <source src="videos/rocket-landing.mp4" type="video/mp4" />
-            </video>
-            <!-- Затемняющий слой поверх видео, чтобы текст читался -->
-            <div class="video-overlay"></div>
-        </div>
+            <!-- Текст поверх видео -->
+            <div class="landing-content" id="landing-text">
+                <h2 class="section-subtitle">Fifth Flight Test</h2>
+                <h1 class="section-title">STARSHIP</h1>
+            </div>
 
-        <!-- Текст поверх видео -->
-        <div class="landing-content" id="landing-text">
-            <h2 class="section-subtitle">Fifth Flight Test</h2>
-            <h1 class="section-title">STARSHIP</h1>
-        </div>
+            <!-- Кнопка управления звуком -->
+            <button id="mute-btn" class="mute-btn" aria-label="Toggle Sound">
+                <!-- Иконка "Без звука" (по умолчанию) -->
+                <svg
+                    class="icon-muted"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <polygon
+                        points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"
+                    ></polygon>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                </svg>
+                <!-- Иконка "Звук включен" (скрыта по умолчанию) -->
+                <svg
+                    class="icon-unmuted"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="display: none"
+                >
+                    <polygon
+                        points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"
+                    ></polygon>
+                    <path
+                        d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"
+                    ></path>
+                </svg>
+            </button>
+        </section>
 
-        <!-- Кнопка управления звуком -->
-        <button id="mute-btn" class="mute-btn" aria-label="Toggle Sound">
-            <!-- Иконка "Без звука" (по умолчанию) -->
-            <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                <line x1="23" y1="9" x2="17" y2="15"></line>
-                <line x1="17" y1="9" x2="23" y2="15"></line>
-            </svg>
-            <!-- Иконка "Звук включен" (скрыта по умолчанию) -->
-            <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" style="display: none">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-            </svg>
-        </button>
-    </section>
+        <!-- Скрипты -->
+        <script>
+            // --- 1. Эффект Liquid Glass для кнопок калькулятора ---
+            const buttons = document.querySelectorAll(".key");
 
-    <!-- Скрипты -->
-    <script>
-        // --- 1. Эффект Liquid Glass для кнопок калькулятора ---
-        const buttons = document.querySelectorAll(".key");
+            buttons.forEach((btn) => {
+                btn.addEventListener("click", function (e) {
+                    const ripple = document.createElement("span");
+                    ripple.classList.add("ripple-effect");
 
-        buttons.forEach((btn) => {
-            btn.addEventListener("click", function (e) {
-                const ripple = document.createElement("span");
-                ripple.classList.add("ripple-effect");
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
 
-                const rect = this.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
+                    ripple.style.left = x + "px";
+                    ripple.style.top = y + "px";
 
-                ripple.style.left = x + "px";
-                ripple.style.top = y + "px";
+                    this.appendChild(ripple);
 
-                this.appendChild(ripple);
-
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
-            });
-        });
-
-        // --- 2. Эффект исчезновения звезд и Марса при прокрутке ---
-        const stars = document.getElementById("stars");
-        const meteors = document.getElementById("meteors");
-        const marsBg = document.getElementById("mars-bg");
-        const scrollBtn = document.getElementById("scroll-down");
-
-        window.addEventListener("scroll", () => {
-            const scrollFraction = Math.min(window.scrollY / window.innerHeight, 1);
-            const fadeOut = 1 - scrollFraction;
-            stars.style.opacity = fadeOut;
-            meteors.style.opacity = fadeOut;
-            marsBg.style.opacity = fadeOut;
-        });
-
-        // --- 3. Плавное появление видео, текста и кнопки звука при доскролливании ---
-        const landingSection = document.getElementById("landing-zone");
-        const videoBlock = document.getElementById("rocket-video-container");
-        const landingText = document.getElementById("landing-text");
-        const muteBtn = document.getElementById("mute-btn");
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        videoBlock.classList.add("visible");
-                        landingText.classList.add("visible");
-                        muteBtn.classList.add("visible");
-                    } else {
-                        videoBlock.classList.remove("visible");
-                        landingText.classList.remove("visible");
-                        muteBtn.classList.remove("visible");
-                    }
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
                 });
-            },
-            {threshold: 0.4},
-        );
-
-        observer.observe(landingSection);
-
-        // --- 4. Плавная прокрутка вниз по клику на стрелочки ---
-        scrollBtn.addEventListener("click", () => {
-            window.scrollTo({
-                top: window.innerHeight,
-                behavior: "smooth",
             });
-        });
 
-        // --- 5. Управление звуком видео ---
-        const video = document.getElementById("rocket-video");
-        const iconMuted = muteBtn.querySelector(".icon-muted");
-        const iconUnmuted = muteBtn.querySelector(".icon-unmuted");
+            // --- 2. Эффект исчезновения звезд и Марса при прокрутке ---
+            const stars = document.getElementById("stars");
+            const meteors = document.getElementById("meteors");
+            const marsBg = document.getElementById("mars-bg");
+            const scrollBtn = document.getElementById("scroll-down");
 
-        muteBtn.addEventListener("click", () => {
-            // Переключаем звук
-            video.muted = !video.muted;
+            window.addEventListener("scroll", () => {
+                const scrollFraction = Math.min(
+                    window.scrollY / window.innerHeight,
+                    1,
+                );
+                const fadeOut = 1 - scrollFraction;
+                stars.style.opacity = fadeOut;
+                meteors.style.opacity = fadeOut;
+                marsBg.style.opacity = fadeOut;
+            });
 
-            // Меняем иконки
-            if (video.muted) {
-                iconMuted.style.display = "block";
-                iconUnmuted.style.display = "none";
-            } else {
-                iconMuted.style.display = "none";
-                iconUnmuted.style.display = "block";
-            }
-        });
-    </script>
-</body>
+            // --- 3. Плавное появление видео, текста и кнопки звука при доскролливании ---
+            const landingSection = document.getElementById("landing-zone");
+            const videoBlock = document.getElementById(
+                "rocket-video-container",
+            );
+            const landingText = document.getElementById("landing-text");
+            const muteBtn = document.getElementById("mute-btn");
 
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            videoBlock.classList.add("visible");
+                            landingText.classList.add("visible");
+                            muteBtn.classList.add("visible");
+                        } else {
+                            videoBlock.classList.remove("visible");
+                            landingText.classList.remove("visible");
+                            muteBtn.classList.remove("visible");
+                        }
+                    });
+                },
+                { threshold: 0.4 },
+            );
+
+            observer.observe(landingSection);
+
+            // --- 4. Плавная прокрутка вниз по клику на стрелочки ---
+            scrollBtn.addEventListener("click", () => {
+                window.scrollTo({
+                    top: window.innerHeight,
+                    behavior: "smooth",
+                });
+            });
+
+            // --- 5. Управление звуком видео ---
+            const video = document.getElementById("rocket-video");
+            const iconMuted = muteBtn.querySelector(".icon-muted");
+            const iconUnmuted = muteBtn.querySelector(".icon-unmuted");
+
+            muteBtn.addEventListener("click", () => {
+                // Переключаем звук
+                video.muted = !video.muted;
+
+                // Меняем иконки
+                if (video.muted) {
+                    iconMuted.style.display = "block";
+                    iconUnmuted.style.display = "none";
+                } else {
+                    iconMuted.style.display = "none";
+                    iconUnmuted.style.display = "block";
+                }
+            });
+        </script>
+    </body>
 </html>

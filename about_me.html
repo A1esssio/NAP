@@ -1,73 +1,75 @@
 <!doctype html>
 <html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>SpaceX | Mission Control</title>
+        <link rel="stylesheet" href="about_me.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700&display=swap"
+            rel="stylesheet"
+        />
+    </head>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SpaceX | Mission Control</title>
-    <link rel="stylesheet" href="about_me.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700&display=swap" rel="stylesheet" />
-</head>
+    <body>
+        <!-- Фоновые эффекты космоса -->
+        <div class="stars-container" id="stars"></div>
 
-<body>
-    <!-- Фоновые эффекты космоса -->
-    <div class="stars-container" id="stars"></div>
-
-    <div class="meteor-shower" id="meteors">
-        <div class="meteor"></div>
-        <div class="meteor"></div>
-        <div class="meteor"></div>
-        <div class="meteor"></div>
-        <div class="meteor"></div>
-        <div class="meteor"></div>
-        <div class="meteor"></div>
-    </div>
-
-    <div class="background-layer" id="mars-bg">
-        <div class="mars-planet"></div>
-        <div class="vignette"></div>
-    </div>
-
-    <!-- Шапка -->
-    <header class="spacex-header">
-        <div class="logo">
-            <a href="index.html">
-                <img src="images/SpaceX_Logo_Black.png" alt="SPACEX" />
-            </a>
+        <div class="meteor-shower" id="meteors">
+            <div class="meteor"></div>
+            <div class="meteor"></div>
+            <div class="meteor"></div>
+            <div class="meteor"></div>
+            <div class="meteor"></div>
+            <div class="meteor"></div>
+            <div class="meteor"></div>
         </div>
-        <nav class="nav-menu">
-            <a href="#">FALCON 9</a>
-            <a href="#">FALCON HEAVY</a>
-            <a href="#">DRAGON</a>
-            <a href="#">STARSHIP</a>
-            <a href="about_me.html">ABOUT ME</a>
-        </nav>
-        <div class="burger-menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </header>
 
-    <main class="about-main">
-        <div class="about-panel">
-            <div class="about-header">
-                <span class="about-label">ABOUT ME</span>
-                <span class="about-sub">Alex Galenko</span>
+        <div class="background-layer" id="mars-bg">
+            <div class="mars-planet"></div>
+            <div class="vignette"></div>
+        </div>
+
+        <!-- Шапка -->
+        <header class="spacex-header">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/SpaceX_Logo_Black.png" alt="SPACEX" />
+                </a>
             </div>
-
-            <div class="about-content">
-                <p>This is Alex Galenko, this website founder and CEO.</p>
-                <p>
-                    Space, science and nvim are my passion. Have never looked towards an
-                    easy life, always towards interests and thoughts.
-                </p>
-                <p>End - is the beginning.</p>
+            <nav class="nav-menu">
+                <a href="#">FALCON 9</a>
+                <a href="#">FALCON HEAVY</a>
+                <a href="#">DRAGON</a>
+                <a href="#">STARSHIP</a>
+                <a href="about_me.html">ABOUT ME</a>
+            </nav>
+            <div class="burger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-        </div>
-    </main>
-</body>
+        </header>
 
+        <main class="about-main">
+            <div class="about-panel">
+                <div class="about-header">
+                    <span class="about-label">ABOUT ME</span>
+                    <span class="about-sub">Alex Galenko</span>
+                </div>
+
+                <div class="about-content">
+                    <p>This is Alex Galenko, this website founder and CEO.</p>
+                    <p>
+                        Space, science and nvim are my passion. Have never
+                        looked towards an easy life, always towards interests
+                        and thoughts.
+                    </p>
+                    <p>End - is the beginning.</p>
+                </div>
+            </div>
+        </main>
+    </body>
 </html>

@@ -12,7 +12,7 @@
 
 body {
     background-color: var(--bg-color);
-    font-family: 'Barlow', sans-serif;
+    font-family: "Barlow", sans-serif;
     color: var(--text-white);
     overflow-x: hidden;
 }
@@ -23,7 +23,7 @@ body {
     border: none;
     color: var(--text-white);
     padding: 25px 0;
-    font-family: 'Barlow', sans-serif;
+    font-family: "Barlow", sans-serif;
     font-size: 18px;
     font-weight: 400;
     cursor: pointer;
@@ -92,7 +92,22 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: radial-gradient(1px 1px at 5% 10%, #fff, transparent), radial-gradient(1px 1px at 15% 45%, #fff, transparent), radial-gradient(1px 1px at 25% 15%, #fff, transparent), radial-gradient(1px 1px at 35% 50%, #fff, transparent), radial-gradient(1px 1px at 45% 20%, #fff, transparent), radial-gradient(1px 1px at 55% 60%, #fff, transparent), radial-gradient(1px 1px at 65% 30%, #fff, transparent), radial-gradient(1px 1px at 75% 70%, #fff, transparent), radial-gradient(1px 1px at 85% 40%, #fff, transparent), radial-gradient(1px 1px at 95% 80%, #fff, transparent), radial-gradient(2px 2px at 10% 85%, #fff, transparent), radial-gradient(2px 2px at 30% 25%, #fff, transparent), radial-gradient(2px 2px at 50% 75%, #fff, transparent), radial-gradient(2px 2px at 70% 35%, #fff, transparent), radial-gradient(2px 2px at 90% 10%, #fff, transparent);
+    background-image:
+        radial-gradient(1px 1px at 5% 10%, #fff, transparent),
+        radial-gradient(1px 1px at 15% 45%, #fff, transparent),
+        radial-gradient(1px 1px at 25% 15%, #fff, transparent),
+        radial-gradient(1px 1px at 35% 50%, #fff, transparent),
+        radial-gradient(1px 1px at 45% 20%, #fff, transparent),
+        radial-gradient(1px 1px at 55% 60%, #fff, transparent),
+        radial-gradient(1px 1px at 65% 30%, #fff, transparent),
+        radial-gradient(1px 1px at 75% 70%, #fff, transparent),
+        radial-gradient(1px 1px at 85% 40%, #fff, transparent),
+        radial-gradient(1px 1px at 95% 80%, #fff, transparent),
+        radial-gradient(2px 2px at 10% 85%, #fff, transparent),
+        radial-gradient(2px 2px at 30% 25%, #fff, transparent),
+        radial-gradient(2px 2px at 50% 75%, #fff, transparent),
+        radial-gradient(2px 2px at 70% 35%, #fff, transparent),
+        radial-gradient(2px 2px at 90% 10%, #fff, transparent);
     background-size: 550px 550px;
     opacity: 0.8;
 }
@@ -111,7 +126,6 @@ body {
 }
 
 @keyframes twinkle {
-
     0%,
     100% {
         opacity: 0.4;
@@ -138,7 +152,6 @@ body {
 }
 
 @keyframes shower-cycle {
-
     0%,
     40% {
         opacity: 0;
@@ -160,7 +173,11 @@ body {
     top: -150px;
     width: 1px;
     height: 150px;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 1)
+    );
     opacity: 0;
     filter: drop-shadow(0 0 6px white);
     animation: meteor-fall 4s linear infinite;
@@ -245,7 +262,7 @@ body {
     transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
-    background: url('mars.jpg') no-repeat center center;
+    background: url("mars.jpg") no-repeat center center;
     background-size: cover;
 }
 
@@ -272,7 +289,6 @@ body {
     z-index: 100;
 }
 
-
 .logo img {
     height: 24px;
     /* уменьши/увеличь по вкусу: 24, 28, 32 и т.д. */
@@ -281,7 +297,6 @@ body {
     display: block;
     /* чтобы не было лишних отступов снизу */
 }
-
 
 .nav-menu {
     display: flex;
@@ -298,7 +313,7 @@ body {
 }
 
 .nav-menu a::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -5px;
     left: 0;
@@ -482,7 +497,9 @@ body {
     z-index: 1;
     opacity: 0;
     transform: scale(1.1);
-    transition: opacity 1.5s ease-out, transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition:
+        opacity 1.5s ease-out,
+        transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .video-block.visible {
@@ -547,7 +564,11 @@ body {
 .mute-btn.visible {
     opacity: 1;
     transform: translateY(0);
-    transition: opacity 0.5s ease 1s, transform 0.5s ease 1s, background 0.3s, transform 0.3s;
+    transition:
+        opacity 0.5s ease 1s,
+        transform 0.5s ease 1s,
+        background 0.3s,
+        transform 0.3s;
 }
 
 .mute-btn:hover {
