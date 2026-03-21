@@ -60,14 +60,6 @@ const observer = new IntersectionObserver(
 
 observer.observe(landingSection);
 
-// --- 4. Плавная прокрутка вниз по клику на стрелочки ---
-scrollBtn.addEventListener("click", () => {
-    window.scrollTo({
-        top: window.innerHeight,
-        behavior: "smooth",
-    });
-});
-
 // --- 5. Управление звуком видео ---
 const video = document.getElementById("rocket-video");
 const iconMuted = muteBtn.querySelector(".icon-muted");
