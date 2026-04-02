@@ -1,0 +1,21 @@
+{
+  "name": "nap",
+  "version": "1.0.0",
+  "description": "NAP - Network Application Programming",
+  "repository": {
+    "type": "git",
+    "url": "git@5zip:5zip/NAP.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "start": "serve ."
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "serve": "^14.2.0"
+  },
+  "devDependencies": {}
+}
