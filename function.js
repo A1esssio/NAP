@@ -13,7 +13,6 @@ function concatenate(arr, separator) {
 
 console.log("=== 1.1 concatenate ===");
 console.log(concatenate(["Я", "Учусь", "на", "лучшей", "кафедре"], " "));
-// Я Учусь на лучшей кафедре
 
 // ============================================================
 
