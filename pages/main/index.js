@@ -1,7 +1,6 @@
 import { items } from "../../mock/items.js";
 import { HeaderComponent } from "../../components/header/index.js";
 import { FilterComponent } from "../../components/filter/index.js";
-import { ItemCardComponent } from "../../components/item-card/index.js";
 
 export class MainPage {
     constructor(parent) {
@@ -10,14 +9,54 @@ export class MainPage {
         this.data = [...items];
         this.filteredData = [...this.data];
         this.bsModal = null;
-    }
-
-    get cardsContainer() {
-        return document.getElementById('cards-container');
+        this.currentIndex = 0;
     }
 
     getCategories() {
         return [...new Set(this.data.map(item => item.category))];
+    }
+
+    getStatusBadgeClass(status) {
+        if (status === 'Success') return 'badge-success-custom';
+        if (status === 'Failure') return 'badge-failure-custom';
+        return 'badge-partial-custom';
+    }
+
+    getCardHTML(item) {
+        const statusClass = this.getStatusBadgeClass(item.status);
+        return `
+        <div class="card mission-card" id="card-${item.id}" style="width:100%;">
+            <div class="mission-card__img-wrap">
+                <img
+                    src="${item.src}"
+                    class="card-img-top mission-card__img"
+                    alt="${item.title}"
+                    loading="lazy"
+                />
+                <span class="mission-card__year">${item.year}</span>
+            </div>
+            <div class="card-body d-flex flex-column gap-2">
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                    <span class="badge badge-category">${item.category}</span>
+                    <span class="badge ${statusClass}">${item.status}</span>
+                </div>
+                <h5 class="card-title mission-card__title mb-0">${item.title}</h5>
+                <p class="card-text mission-card__text">${item.description}</p>
+                <div class="d-flex gap-2 align-items-center mt-2">
+                    <button
+                        class="btn btn-outline-light btn-sm flex-grow-1 btn-detail"
+                        id="detail-btn-${item.id}"
+                        data-id="${item.id}"
+                    >Details →</button>
+                    <button
+                        class="btn btn-outline-danger btn-sm btn-delete"
+                        id="delete-btn-${item.id}"
+                        data-id="${item.id}"
+                        title="Remove mission"
+                    >✕</button>
+                </div>
+            </div>
+        </div>`;
     }
 
     getHTML() {
@@ -30,9 +69,7 @@ export class MainPage {
                 </div>
             </div>
 
-            <!-- Toolbar -->
             <div class="d-flex align-items-center gap-3 flex-wrap mb-4" id="toolbar">
-                <!-- FilterComponent renders here -->
                 <button
                     id="add-btn"
                     class="btn btn-light btn-add ms-auto"
@@ -43,14 +80,14 @@ export class MainPage {
                 </button>
             </div>
 
-            <!-- Cards grid using Bootstrap row-cols -->
-            <div
-                id="cards-container"
-                class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4"
-            ></div>
+            <div class="mission-carousel-wrapper" id="carousel-wrapper">
+                <button class="carousel-nav-btn carousel-nav-btn--prev" id="carousel-prev">&#8592;</button>
+                <div class="mission-carousel-track" id="carousel-track"></div>
+                <button class="carousel-nav-btn carousel-nav-btn--next" id="carousel-next">&#8594;</button>
+                <div class="carousel-dots" id="carousel-dots"></div>
+            </div>
         </div>
 
-        <!-- Bootstrap Modal -->
         <div
             class="modal fade"
             id="addMissionModal"
@@ -77,26 +114,85 @@ export class MainPage {
                     </div>
                 </div>
             </div>
-        </div>
-        `;
+        </div>`;
     }
 
     renderCards() {
-        this.cardsContainer.innerHTML = '';
+        const track = document.getElementById('carousel-track');
+        const dotsContainer = document.getElementById('carousel-dots');
+        if (!track) return;
+
+        track.innerHTML = '';
+        dotsContainer.innerHTML = '';
 
         if (this.filteredData.length === 0) {
-            this.cardsContainer.innerHTML = `
-                <div class="col-12 text-center py-5">
+            track.innerHTML = `
+                <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;">
                     <p class="fs-5 fw-semibold text-white mb-2">No missions found</p>
                     <p class="text-secondary">Try changing the filter or add a new mission.</p>
                 </div>`;
             return;
         }
 
-        this.filteredData.forEach(item => {
-            const card = new ItemCardComponent(this.cardsContainer);
-            card.render(item, this.onDetailClick.bind(this), this.onDeleteClick.bind(this));
+        // Clamp index
+        if (this.currentIndex >= this.filteredData.length) this.currentIndex = 0;
+
+        // Build slides
+        this.filteredData.forEach((item, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'carousel-slide';
+            slide.dataset.index = index;
+            slide.innerHTML = this.getCardHTML(item);
+            track.appendChild(slide);
+
+            // Listeners
+            slide.querySelector(`#detail-btn-${item.id}`)
+                .addEventListener('click', (e) => this.onDetailClick(e));
+            slide.querySelector(`#delete-btn-${item.id}`)
+                .addEventListener('click', (e) => this.onDeleteClick(e));
+
+            // Dot
+            const dot = document.createElement('button');
+            dot.className = 'carousel-dot';
+            dot.dataset.index = index;
+            dot.addEventListener('click', () => {
+                this.currentIndex = index;
+                this.updateCarousel();
+            });
+            dotsContainer.appendChild(dot);
         });
+
+        this.updateCarousel();
+    }
+
+    updateCarousel() {
+        const track = document.getElementById('carousel-track');
+        const dotsContainer = document.getElementById('carousel-dots');
+        if (!track) return;
+
+        const slides = Array.from(track.querySelectorAll('.carousel-slide'));
+        const total = slides.length;
+        if (total === 0) return;
+
+        this.currentIndex = ((this.currentIndex % total) + total) % total;
+
+        slides.forEach((slide, i) => {
+            let offset = i - this.currentIndex;
+            if (offset > total / 2) offset -= total;
+            if (offset < -total / 2) offset += total;
+
+            slide.classList.remove('is-active', 'is-prev', 'is-next', 'is-far');
+            if (offset === 0)       slide.classList.add('is-active');
+            else if (offset === -1) slide.classList.add('is-prev');
+            else if (offset === 1)  slide.classList.add('is-next');
+            else                    slide.classList.add('is-far');
+        });
+
+        if (dotsContainer) {
+            Array.from(dotsContainer.querySelectorAll('.carousel-dot')).forEach((dot, i) => {
+                dot.classList.toggle('carousel-dot--active', i === this.currentIndex);
+            });
+        }
     }
 
     renderModalList() {
@@ -155,6 +251,7 @@ export class MainPage {
 
     onFilterChange(e) {
         const value = e.target.value;
+        this.currentIndex = 0;
         this.filteredData = value === 'all'
             ? [...this.data]
             : this.data.filter(item => item.category === value);
@@ -171,21 +268,12 @@ export class MainPage {
 
     onDeleteClick(e) {
         const id = Number(e.target.dataset.id);
-        const cardWrapper = document.getElementById(`card-${id}`)?.closest('.col');
-        if (cardWrapper) {
-            cardWrapper.style.transition = 'opacity 0.25s, transform 0.25s';
-            cardWrapper.style.opacity = '0';
-            cardWrapper.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                this.data = this.data.filter(item => item.id !== id);
-                this.filteredData = this.filteredData.filter(item => item.id !== id);
-                this.renderCards();
-            }, 250);
-        } else {
-            this.data = this.data.filter(item => item.id !== id);
-            this.filteredData = this.filteredData.filter(item => item.id !== id);
-            this.renderCards();
+        this.data = this.data.filter(item => item.id !== id);
+        this.filteredData = this.filteredData.filter(item => item.id !== id);
+        if (this.currentIndex >= this.filteredData.length && this.currentIndex > 0) {
+            this.currentIndex--;
         }
+        this.renderCards();
     }
 
     render() {
@@ -199,12 +287,10 @@ export class MainPage {
 
         this.parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-        // Init Bootstrap modal instance
         const modalEl = document.getElementById('addMissionModal');
         this.bsModal = new bootstrap.Modal(modalEl);
         modalEl.addEventListener('show.bs.modal', () => this.renderModalList());
 
-        // Render filter
         const addBtn = document.getElementById('add-btn');
         const filter = new FilterComponent(null);
         addBtn.insertAdjacentHTML('beforebegin', filter.getHTML(this.getCategories()));
@@ -213,5 +299,15 @@ export class MainPage {
             .addEventListener('change', this.onFilterChange.bind(this));
 
         this.renderCards();
+
+        document.getElementById('carousel-prev')
+            .addEventListener('click', () => { this.currentIndex--; this.updateCarousel(); });
+        document.getElementById('carousel-next')
+            .addEventListener('click', () => { this.currentIndex++; this.updateCarousel(); });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft')  { this.currentIndex--; this.updateCarousel(); }
+            if (e.key === 'ArrowRight') { this.currentIndex++; this.updateCarousel(); }
+        });
     }
 }
