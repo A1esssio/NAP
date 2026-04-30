@@ -3,28 +3,28 @@ import { HeaderComponent } from "../../components/header/index.js";
 import { FilterComponent } from "../../components/filter/index.js";
 
 export class MainPage {
-    constructor(parent) {
-        this.parent = parent;
-        this.masterData = [...items];
-        this.data = [...items];
-        this.filteredData = [...this.data];
-        this.bsModal = null;
-        this.currentIndex = 0;
-    }
+  constructor(parent) {
+    this.parent = parent;
+    this.masterData = [...items];
+    this.data = [...items];
+    this.filteredData = [...this.data];
+    this.bsModal = null;
+    this.currentIndex = 0;
+  }
 
-    getCategories() {
-        return [...new Set(this.data.map(item => item.category))];
-    }
+  getCategories() {
+    return [...new Set(this.data.map((item) => item.category))];
+  }
 
-    getStatusBadgeClass(status) {
-        if (status === 'Success') return 'badge-success-custom';
-        if (status === 'Failure') return 'badge-failure-custom';
-        return 'badge-partial-custom';
-    }
+  getStatusBadgeClass(status) {
+    if (status === "Success") return "badge-success-custom";
+    if (status === "Failure") return "badge-failure-custom";
+    return "badge-partial-custom";
+  }
 
-    getCardHTML(item) {
-        const statusClass = this.getStatusBadgeClass(item.status);
-        return `
+  getCardHTML(item) {
+    const statusClass = this.getStatusBadgeClass(item.status);
+    return `
         <div class="card mission-card" id="card-${item.id}" style="width:100%;">
             <div class="mission-card__img-wrap">
                 <img
@@ -57,10 +57,10 @@ export class MainPage {
                 </div>
             </div>
         </div>`;
-    }
+  }
 
-    getHTML() {
-        return `
+  getHTML() {
+    return `
         <div class="container-fluid page-wrapper">
             <div class="row mb-4">
                 <div class="col">
@@ -115,101 +115,102 @@ export class MainPage {
                 </div>
             </div>
         </div>`;
-    }
+  }
 
-    renderCards() {
-        const track = document.getElementById('carousel-track');
-        const dotsContainer = document.getElementById('carousel-dots');
-        if (!track) return;
+  renderCards() {
+    const track = document.getElementById("carousel-track");
+    const dotsContainer = document.getElementById("carousel-dots");
+    if (!track) return;
 
-        track.innerHTML = '';
-        dotsContainer.innerHTML = '';
+    track.innerHTML = "";
+    dotsContainer.innerHTML = "";
 
-        if (this.filteredData.length === 0) {
-            track.innerHTML = `
+    if (this.filteredData.length === 0) {
+      track.innerHTML = `
                 <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;">
                     <p class="fs-5 fw-semibold text-white mb-2">No missions found</p>
                     <p class="text-secondary">Try changing the filter or add a new mission.</p>
                 </div>`;
-            return;
-        }
+      return;
+    }
 
-        // Clamp index
-        if (this.currentIndex >= this.filteredData.length) this.currentIndex = 0;
+    if (this.currentIndex >= this.filteredData.length) this.currentIndex = 0;
 
-        // Build slides
-        this.filteredData.forEach((item, index) => {
-            const slide = document.createElement('div');
-            slide.className = 'carousel-slide';
-            slide.dataset.index = index;
-            slide.innerHTML = this.getCardHTML(item);
-            track.appendChild(slide);
+    this.filteredData.forEach((item, index) => {
+      const slide = document.createElement("div");
+      slide.className = "carousel-slide";
+      slide.dataset.index = index;
+      slide.innerHTML = this.getCardHTML(item);
+      track.appendChild(slide);
 
-            // Listeners
-            slide.querySelector(`#detail-btn-${item.id}`)
-                .addEventListener('click', (e) => this.onDetailClick(e));
-            slide.querySelector(`#delete-btn-${item.id}`)
-                .addEventListener('click', (e) => this.onDeleteClick(e));
+      slide
+        .querySelector(`#detail-btn-${item.id}`)
+        .addEventListener("click", (e) => this.onDetailClick(e));
+      slide
+        .querySelector(`#delete-btn-${item.id}`)
+        .addEventListener("click", (e) => this.onDeleteClick(e));
 
-            // Dot
-            const dot = document.createElement('button');
-            dot.className = 'carousel-dot';
-            dot.dataset.index = index;
-            dot.addEventListener('click', () => {
-                this.currentIndex = index;
-                this.updateCarousel();
-            });
-            dotsContainer.appendChild(dot);
-        });
-
+      const dot = document.createElement("button");
+      dot.className = "carousel-dot";
+      dot.dataset.index = index;
+      dot.addEventListener("click", () => {
+        this.currentIndex = index;
         this.updateCarousel();
+      });
+      dotsContainer.appendChild(dot);
+    });
+
+    this.updateCarousel();
+  }
+
+  updateCarousel() {
+    const track = document.getElementById("carousel-track");
+    const dotsContainer = document.getElementById("carousel-dots");
+    if (!track) return;
+
+    const slides = Array.from(track.querySelectorAll(".carousel-slide"));
+    const total = slides.length;
+    if (total === 0) return;
+
+    this.currentIndex = ((this.currentIndex % total) + total) % total;
+
+    slides.forEach((slide, i) => {
+      let offset = i - this.currentIndex;
+      if (offset > total / 2) offset -= total;
+      if (offset < -total / 2) offset += total;
+
+      slide.classList.remove("is-active", "is-prev", "is-next", "is-far");
+      if (offset === 0) slide.classList.add("is-active");
+      else if (offset === -1) slide.classList.add("is-prev");
+      else if (offset === 1) slide.classList.add("is-next");
+      else slide.classList.add("is-far");
+    });
+
+    if (dotsContainer) {
+      Array.from(dotsContainer.querySelectorAll(".carousel-dot")).forEach(
+        (dot, i) => {
+          dot.classList.toggle("carousel-dot--active", i === this.currentIndex);
+        },
+      );
+    }
+  }
+
+  renderModalList() {
+    const list = document.getElementById("modal-list");
+    list.innerHTML = "";
+    const existingIds = new Set(this.data.map((i) => i.id));
+    const available = this.masterData.filter((i) => !existingIds.has(i.id));
+
+    if (available.length === 0) {
+      list.innerHTML = `<p class="text-secondary text-center py-4">All missions are already in your list.</p>`;
+      return;
     }
 
-    updateCarousel() {
-        const track = document.getElementById('carousel-track');
-        const dotsContainer = document.getElementById('carousel-dots');
-        if (!track) return;
-
-        const slides = Array.from(track.querySelectorAll('.carousel-slide'));
-        const total = slides.length;
-        if (total === 0) return;
-
-        this.currentIndex = ((this.currentIndex % total) + total) % total;
-
-        slides.forEach((slide, i) => {
-            let offset = i - this.currentIndex;
-            if (offset > total / 2) offset -= total;
-            if (offset < -total / 2) offset += total;
-
-            slide.classList.remove('is-active', 'is-prev', 'is-next', 'is-far');
-            if (offset === 0)       slide.classList.add('is-active');
-            else if (offset === -1) slide.classList.add('is-prev');
-            else if (offset === 1)  slide.classList.add('is-next');
-            else                    slide.classList.add('is-far');
-        });
-
-        if (dotsContainer) {
-            Array.from(dotsContainer.querySelectorAll('.carousel-dot')).forEach((dot, i) => {
-                dot.classList.toggle('carousel-dot--active', i === this.currentIndex);
-            });
-        }
-    }
-
-    renderModalList() {
-        const list = document.getElementById('modal-list');
-        list.innerHTML = '';
-        const existingIds = new Set(this.data.map(i => i.id));
-        const available = this.masterData.filter(i => !existingIds.has(i.id));
-
-        if (available.length === 0) {
-            list.innerHTML = `<p class="text-secondary text-center py-4">All missions are already in your list.</p>`;
-            return;
-        }
-
-        available.forEach(item => {
-            const el = document.createElement('div');
-            el.className = 'modal-mission-item d-flex align-items-center gap-3 p-2 rounded';
-            el.innerHTML = `
+    available.forEach((item) => {
+      const el = document.createElement("div");
+      el.className =
+        "modal-mission-item d-flex align-items-center gap-3 p-2 rounded";
+      el.innerHTML = `
                 <img src="${item.src}" alt="${item.title}" class="modal-mission-img rounded" />
                 <div class="flex-grow-1 min-w-0">
                     <div class="text-secondary small text-uppercase fw-bold" style="letter-spacing:.1em;font-size:10px;">${item.category}</div>
@@ -218,96 +219,119 @@ export class MainPage {
                 </div>
                 <button class="btn btn-outline-light btn-sm modal-add-btn" data-id="${item.id}">+</button>
             `;
-            el.querySelector('.modal-add-btn').addEventListener('click', () => this.onModalAdd(item.id));
-            list.appendChild(el);
-        });
+      el.querySelector(".modal-add-btn").addEventListener("click", () =>
+        this.onModalAdd(item.id),
+      );
+      list.appendChild(el);
+    });
+  }
+
+  onModalAdd(id) {
+    const mission = this.masterData.find((i) => i.id === id);
+    if (!mission || this.data.find((i) => i.id === id)) return;
+
+    const masterIndex = this.masterData.findIndex((i) => i.id === id);
+    let insertIndex = this.data.length;
+    for (let i = 0; i < this.data.length; i++) {
+      const di = this.masterData.findIndex((m) => m.id === this.data[i].id);
+      if (di > masterIndex) {
+        insertIndex = i;
+        break;
+      }
     }
+    this.data.splice(insertIndex, 0, mission);
 
-    onModalAdd(id) {
-        const mission = this.masterData.find(i => i.id === id);
-        if (!mission || this.data.find(i => i.id === id)) return;
+    const select = document.getElementById("filter-select");
+    const value = select ? select.value : "all";
+    this.filteredData =
+      value === "all"
+        ? [...this.data]
+        : this.data.filter((item) => item.category === value);
 
-        const masterIndex = this.masterData.findIndex(i => i.id === id);
-        let insertIndex = this.data.length;
-        for (let i = 0; i < this.data.length; i++) {
-            const di = this.masterData.findIndex(m => m.id === this.data[i].id);
-            if (di > masterIndex) { insertIndex = i; break; }
-        }
-        this.data.splice(insertIndex, 0, mission);
+    this.renderCards();
+    this.renderModalList();
 
-        const select = document.getElementById('filter-select');
-        const value = select ? select.value : 'all';
-        this.filteredData = value === 'all'
-            ? [...this.data]
-            : this.data.filter(item => item.category === value);
+    const existingIds = new Set(this.data.map((i) => i.id));
+    const remaining = this.masterData.filter((i) => !existingIds.has(i.id));
+    if (remaining.length === 0 && this.bsModal) this.bsModal.hide();
+  }
 
-        this.renderCards();
-        this.renderModalList();
+  onFilterChange(e) {
+    const value = e.target.value;
+    this.currentIndex = 0;
+    this.filteredData =
+      value === "all"
+        ? [...this.data]
+        : this.data.filter((item) => item.category === value);
+    this.renderCards();
+  }
 
-        const existingIds = new Set(this.data.map(i => i.id));
-        const remaining = this.masterData.filter(i => !existingIds.has(i.id));
-        if (remaining.length === 0 && this.bsModal) this.bsModal.hide();
+  onDetailClick(e) {
+    const id = Number(e.target.dataset.id);
+    import("../detail/index.js").then(({ DetailPage }) => {
+      const page = new DetailPage(this.parent, id, this.data);
+      page.render();
+    });
+  }
+
+  onDeleteClick(e) {
+    const id = Number(e.target.dataset.id);
+    this.data = this.data.filter((item) => item.id !== id);
+    this.filteredData = this.filteredData.filter((item) => item.id !== id);
+    if (
+      this.currentIndex >= this.filteredData.length &&
+      this.currentIndex > 0
+    ) {
+      this.currentIndex--;
     }
+    this.renderCards();
+  }
 
-    onFilterChange(e) {
-        const value = e.target.value;
-        this.currentIndex = 0;
-        this.filteredData = value === 'all'
-            ? [...this.data]
-            : this.data.filter(item => item.category === value);
-        this.renderCards();
-    }
+  render() {
+    this.parent.innerHTML = "";
 
-    onDetailClick(e) {
-        const id = Number(e.target.dataset.id);
-        import("../detail/index.js").then(({ DetailPage }) => {
-            const page = new DetailPage(this.parent, id, this.data);
-            page.render();
-        });
-    }
+    const header = new HeaderComponent(this.parent);
+    header.render(() => {
+      const page = new MainPage(this.parent);
+      page.render();
+    });
 
-    onDeleteClick(e) {
-        const id = Number(e.target.dataset.id);
-        this.data = this.data.filter(item => item.id !== id);
-        this.filteredData = this.filteredData.filter(item => item.id !== id);
-        if (this.currentIndex >= this.filteredData.length && this.currentIndex > 0) {
-            this.currentIndex--;
-        }
-        this.renderCards();
-    }
+    this.parent.insertAdjacentHTML("beforeend", this.getHTML());
 
-    render() {
-        this.parent.innerHTML = '';
+    const modalEl = document.getElementById("addMissionModal");
+    this.bsModal = new bootstrap.Modal(modalEl);
+    modalEl.addEventListener("show.bs.modal", () => this.renderModalList());
 
-        const header = new HeaderComponent(this.parent);
-        header.render(() => {
-            const page = new MainPage(this.parent);
-            page.render();
-        });
+    const addBtn = document.getElementById("add-btn");
+    const filter = new FilterComponent(null);
+    addBtn.insertAdjacentHTML(
+      "beforebegin",
+      filter.getHTML(this.getCategories()),
+    );
+    document
+      .getElementById("filter-select")
+      .addEventListener("change", this.onFilterChange.bind(this));
 
-        this.parent.insertAdjacentHTML('beforeend', this.getHTML());
+    this.renderCards();
 
-        const modalEl = document.getElementById('addMissionModal');
-        this.bsModal = new bootstrap.Modal(modalEl);
-        modalEl.addEventListener('show.bs.modal', () => this.renderModalList());
+    document.getElementById("carousel-prev").addEventListener("click", () => {
+      this.currentIndex--;
+      this.updateCarousel();
+    });
+    document.getElementById("carousel-next").addEventListener("click", () => {
+      this.currentIndex++;
+      this.updateCarousel();
+    });
 
-        const addBtn = document.getElementById('add-btn');
-        const filter = new FilterComponent(null);
-        addBtn.insertAdjacentHTML('beforebegin', filter.getHTML(this.getCategories()));
-        document
-            .getElementById('filter-select')
-            .addEventListener('change', this.onFilterChange.bind(this));
-
-        this.renderCards();
-
-        document.getElementById('carousel-prev')
-            .addEventListener('click', () => { this.currentIndex--; this.updateCarousel(); });
-        document.getElementById('carousel-next')
-            .addEventListener('click', () => { this.currentIndex++; this.updateCarousel(); });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft')  { this.currentIndex--; this.updateCarousel(); }
-            if (e.key === 'ArrowRight') { this.currentIndex++; this.updateCarousel(); }
-        });
-    }
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") {
+        this.currentIndex--;
+        this.updateCarousel();
+      }
+      if (e.key === "ArrowRight") {
+        this.currentIndex++;
+        this.updateCarousel();
+      }
+    });
+  }
 }

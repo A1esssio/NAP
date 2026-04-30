@@ -1,8 +1,3 @@
-/* ============================================
-   CUSTOM OVERRIDES ON TOP OF BOOTSTRAP 5
-   SpaceX Mission Archive
-   ============================================ */
-
 :root {
   --bg-color: #000000;
   --text-gray: #8b939b;
@@ -11,7 +6,6 @@
   --header-bg: rgba(0, 0, 0, 0.75);
 }
 
-/* --- Base --------------------------------- */
 body {
   background-color: var(--bg-color);
   font-family: "Barlow", sans-serif;
@@ -20,7 +14,6 @@ body {
   min-height: 100vh;
 }
 
-/* --- Cosmic background -------------------- */
 .stars-container {
   position: fixed;
   inset: 0;
@@ -176,7 +169,6 @@ body {
   );
 }
 
-/* --- Header ------------------------------- */
 .spacex-header {
   background: var(--header-bg) !important;
   backdrop-filter: blur(20px);
@@ -188,11 +180,8 @@ body {
 
 .logo img {
   height: 24px;
-  /* уменьши/увеличь по вкусу: 24, 28, 32 и т.д. */
   width: auto;
-  /* ширина подстроится пропорционально */
   display: block;
-  /* чтобы не было лишних отступов снизу */
 }
 
 .btn-home {
@@ -202,7 +191,6 @@ body {
   text-transform: uppercase;
 }
 
-/* --- Page wrapper ------------------------- */
 #root {
   min-height: 100vh;
 }
@@ -228,7 +216,6 @@ body {
   line-height: 1.1;
 }
 
-/* --- Toolbar ------------------------------ */
 .filter-label {
   font-size: 11px !important;
   font-weight: 600;
@@ -255,7 +242,6 @@ body {
   text-transform: uppercase;
 }
 
-/* --- Mission card ------------------------- */
 .mission-card.card {
   background: var(--card-bg) !important;
   border: 1px solid var(--border) !important;
@@ -323,7 +309,6 @@ body {
   line-height: 1.6;
 }
 
-/* Custom badge colors */
 .badge-category {
   font-size: 10px !important;
   font-weight: 700 !important;
@@ -350,7 +335,6 @@ body {
   border: 1px solid rgba(248, 113, 113, 0.3) !important;
 }
 
-/* Bootstrap button overrides */
 .btn-detail.btn-outline-light {
   font-size: 12px;
   font-weight: 700;
@@ -361,7 +345,6 @@ body {
   flex-shrink: 0;
 }
 
-/* --- Detail card -------------------------- */
 .detail-card.card {
   background: var(--card-bg) !important;
   border: 1px solid var(--border) !important;
@@ -404,7 +387,6 @@ body {
   font-weight: 700;
 }
 
-/* --- Bootstrap Modal overrides ----------- */
 .modal-custom {
   background: #0d0f13 !important;
   border: 1px solid var(--border) !important;
@@ -452,7 +434,6 @@ body {
   transform: scale(1.1);
 }
 
-/* --- Responsive -------------------------- */
 @media (max-width: 768px) {
   .page-wrapper {
     padding: 28px 16px 60px;
@@ -462,18 +443,6 @@ body {
   }
 }
 
-/* ============================================
-   MISSION CAROUSEL
-   ============================================ */
-
-/*
-  Архитектура:
-  .mission-carousel-wrapper  — flex-контейнер, выравнивает кнопки и трек по центру
-  .mission-carousel-track    — относительный блок 340px, содержит абсолютные слайды
-  .carousel-slide            — position:absolute, left:0, top:0, width:100%
-                               трансформируется translateX в пикселях
-*/
-
 .mission-carousel-wrapper {
   position: relative;
   width: 100%;
@@ -481,20 +450,17 @@ body {
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
-  padding: 0 80px 60px; /* боковые отступы под кнопки, низ под точки */
+  padding: 0 80px 60px;
   box-sizing: border-box;
 }
 
-/* Трек — ровно ширина одной карточки */
 .mission-carousel-track {
   position: relative;
   width: 340px;
   flex-shrink: 0;
-  /* Высота подстраивается под самую высокую карточку */
   min-height: 460px;
 }
 
-/* Каждый слайд лежит поверх друг друга */
 .carousel-slide {
   position: absolute;
   top: 0;
@@ -506,12 +472,10 @@ body {
   will-change: transform, opacity;
 }
 
-/* Карточка внутри слайда — полная ширина */
 .carousel-slide .mission-card {
   width: 100% !important;
 }
 
-/* ---- Состояния ---- */
 .carousel-slide.is-active {
   transform: translateX(0) scale(1);
   opacity: 1;
@@ -540,7 +504,6 @@ body {
   pointer-events: none;
 }
 
-/* ---- Кнопки навигации ---- */
 .carousel-nav-btn {
   position: absolute;
   top: 50%;
@@ -570,7 +533,6 @@ body {
   border-color: rgba(255, 255, 255, 0.45);
 }
 
-/* Кнопки прижаты к краям враппера */
 .carousel-nav-btn--prev {
   left: 16px;
 }
@@ -578,7 +540,6 @@ body {
   right: 16px;
 }
 
-/* ---- Точки-индикаторы ---- */
 .carousel-dots {
   position: absolute;
   bottom: 12px;
@@ -609,7 +570,6 @@ body {
   transform: scale(1.35);
 }
 
-/* ---- Адаптив ---- */
 @media (max-width: 600px) {
   .mission-carousel-wrapper {
     padding: 0 56px 56px;
