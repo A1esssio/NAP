@@ -1,3 +1,13 @@
+const readline = require("readline");
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+const ask = (question) =>
+  new Promise((resolve) => rl.question(question, resolve));
+
 // Задание 1.1 — concatenate
 
 function concatenate(arr, separator) {
@@ -99,3 +109,40 @@ console.log("\n=== 3.2 inverse ===");
 console.log(inverse([1, 2, 3, 4, 5]));
 console.log(inverse([1, 2, 3, 4, 5], 2));
 console.log(inverse([1, 2, 3, 4, 5], -2));
+
+async function main() {
+  // 1.1
+  console.log("\n");
+  const input11 = await ask("Введите слова через запятую: ");
+  const sep = await ask("Введите разделитель: ");
+  const arr11 = input11.split(",");
+  console.log("Результат:", concatenate(arr11, sep));
+
+  // 1.10
+  console.log("\n");
+  const input110 = await ask(
+    "Введите значения через запятую (0, false, null, и т.д.): ",
+  );
+  const arr110 = input110.split(",").map((item) => {
+    const v = item.trim();
+    if (v === "false") return false;
+    if (v === "null") return null;
+    if (v === "undefined") return undefined;
+    if (v === "") return "";
+    if (!isNaN(v)) return Number(v);
+    return v;
+  });
+  console.log("Результат:", erase(arr110));
+
+  // 2.4
+  console.log("\n");
+  const input24a = await ask("Введите первый массив через запятую: ");
+  const input24b = await ask("Введите второй массив через запятую: ");
+  const arr24a = input24a.split(",").map((s) => s.trim());
+  const arr24b = input24b.split(",").map((s) => s.trim());
+  console.log("Результат:", diff(arr24a, arr24b));
+
+  rl.close();
+}
+
+main();
