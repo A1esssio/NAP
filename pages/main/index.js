@@ -1,5 +1,4 @@
 import { HeaderComponent } from '../../components/header/index.js';
-import { FilterComponent } from '../../components/filter/index.js';
 import { ajax } from '../../modules/ajax.js';
 import { stockUrls } from '../../modules/stockUrls.js';
 
@@ -11,35 +10,20 @@ export class MainPage {
         this.currentIndex = 0;
     }
 
-    getCategories() {
-        return [...new Set(this.data.map((item) => item.category))];
-    }
-
-    getStatusBadgeClass(status) {
-        if (status === 'Success') return 'badge-success-custom';
-        if (status === 'Failure') return 'badge-failure-custom';
-        return 'badge-partial-custom';
-    }
-
     getCardHTML(item) {
-        const statusClass = this.getStatusBadgeClass(item.status);
         return `
         <div class="card mission-card" id="card-${item.id}" style="width:100%;">
             <div class="mission-card__img-wrap">
                 <img
-                    src="${item.src}"
+                    src="${item.image}"
                     class="card-img-top mission-card__img"
-                    alt="${item.title}"
+                    alt="${item.mission_name}"
                     loading="lazy"
+                    onerror="this.src='https://images.unsplash.com/photo-1446776899648-aa78eefe8ed0?w=800&q=85'"
                 />
-                <span class="mission-card__year">${item.year}</span>
             </div>
             <div class="card-body d-flex flex-column gap-2">
-                <div class="d-flex align-items-center gap-2 flex-wrap">
-                    <span class="badge badge-category">${item.category}</span>
-                    <span class="badge ${statusClass}">${item.status}</span>
-                </div>
-                <h5 class="card-title mission-card__title mb-0">${item.title}</h5>
+                <h5 class="card-title mission-card__title mb-0">${item.mission_name}</h5>
                 <p class="card-text mission-card__text">${item.description}</p>
                 <div class="d-flex gap-2 align-items-center mt-2">
                     <button
@@ -83,7 +67,7 @@ export class MainPage {
             <div class="mission-carousel-wrapper" id="carousel-wrapper">
                 <button class="carousel-nav-btn carousel-nav-btn--prev" id="carousel-prev">&#8592;</button>
                 <div class="mission-carousel-track" id="carousel-track">
-                    <div class="carousel-loading text-center" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);">
+                    <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;">
                         <div class="spinner-border text-light" role="status"></div>
                         <p class="text-secondary mt-3">Loading missions...</p>
                     </div>
@@ -95,11 +79,10 @@ export class MainPage {
     }
 
     getData() {
-        ajax.get(stockUrls.getStocks(), (data, status) => {
+        ajax.get(stockUrls.getMissions(), (data, status) => {
             if (status === 200 && data) {
                 this.data = data;
                 this.filteredData = [...this.data];
-                this.rebuildFilter();
                 this.renderCards();
             } else {
                 console.error('Ошибка загрузки миссий:', status);
@@ -118,19 +101,6 @@ export class MainPage {
             </div>`;
     }
 
-    rebuildFilter() {
-        const addBtn = document.getElementById('add-btn');
-        if (!addBtn) return;
-        const existing = document.getElementById('filter-select');
-        if (existing) existing.closest('.d-flex.align-items-center').remove();
-
-        const filter = new FilterComponent(null);
-        addBtn.insertAdjacentHTML('beforebegin', filter.getHTML(this.getCategories()));
-        document
-            .getElementById('filter-select')
-            .addEventListener('change', this.onFilterChange.bind(this));
-    }
-
     renderCards() {
         const track = document.getElementById('carousel-track');
         const dotsContainer = document.getElementById('carousel-dots');
@@ -143,7 +113,6 @@ export class MainPage {
             track.innerHTML = `
                 <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;">
                     <p class="fs-5 fw-semibold text-white mb-2">No missions found</p>
-                    <p class="text-secondary">Try changing the filter.</p>
                 </div>`;
             return;
         }
@@ -205,16 +174,6 @@ export class MainPage {
                 (dot, i) => dot.classList.toggle('carousel-dot--active', i === this.currentIndex)
             );
         }
-    }
-
-    onFilterChange(e) {
-        const value = e.target.value;
-        this.currentIndex = 0;
-        this.filteredData =
-            value === 'all'
-                ? [...this.data]
-                : this.data.filter((item) => item.category === value);
-        this.renderCards();
     }
 
     onDetailClick(e) {

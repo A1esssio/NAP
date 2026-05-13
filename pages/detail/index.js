@@ -1,5 +1,4 @@
 import { HeaderComponent } from '../../components/header/index.js';
-import { ItemDetailComponent } from '../../components/item-detail/index.js';
 import { MainPage } from '../main/index.js';
 import { ajax } from '../../modules/ajax.js';
 import { stockUrls } from '../../modules/stockUrls.js';
@@ -19,7 +18,7 @@ export class DetailPage {
     }
 
     getData() {
-        ajax.get(stockUrls.getStockById(this.id), (data, status) => {
+        ajax.get(stockUrls.getMissionById(this.id), (data, status) => {
             if (status === 200 && data) {
                 this.renderData(data);
             } else {
@@ -33,24 +32,42 @@ export class DetailPage {
     }
 
     renderData(data) {
+        this.pageRoot.innerHTML = '';
+
         this.pageRoot.insertAdjacentHTML('beforeend', `
             <div class="mb-4">
                 <p class="page-subtitle">Mission Details</p>
-                <h1 class="page-title">${data.title}</h1>
+                <h1 class="page-title">${data.mission_name}</h1>
+            </div>
+
+            <div class="card detail-card">
+                <div class="row g-0">
+                    <div class="col-md-6">
+                        <img
+                            src="${data.image}"
+                            class="detail-card__img img-fluid"
+                            alt="${data.mission_name}"
+                            onerror="this.src='https://images.unsplash.com/photo-1446776899648-aa78eefe8ed0?w=800&q=85'"
+                        />
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body detail-card__body d-flex flex-column gap-3 h-100 p-4">
+                            <div class="detail-card__meta-item">
+                                <span class="detail-card__meta-label">Mission ID</span>
+                                <strong class="detail-card__meta-value">#${String(data.id).padStart(3, '0')}</strong>
+                            </div>
+                            <hr class="border-secondary" />
+                            <p class="card-text detail-card__text">${data.description}</p>
+                            <div class="mt-auto">
+                                <button class="btn btn-outline-warning" id="btn-edit-detail">
+                                    ✎ Edit Mission
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         `);
-
-        const detail = new ItemDetailComponent(this.pageRoot);
-        detail.render(data);
-
-        // Кнопка редактирования
-        const editBtn = document.createElement('div');
-        editBtn.className = 'mt-4';
-        editBtn.innerHTML = `
-            <button class="btn btn-outline-warning" id="btn-edit-detail">
-                ✎ Edit Mission
-            </button>`;
-        this.pageRoot.appendChild(editBtn);
 
         document.getElementById('btn-edit-detail').addEventListener('click', () => {
             import('../edit/index.js').then(({ EditPage }) => {
@@ -73,7 +90,6 @@ export class DetailPage {
 
         this.parent.insertAdjacentHTML('beforeend', this.getHTML());
 
-        // Показываем спиннер пока грузится
         this.pageRoot.innerHTML = `
             <div class="text-center py-5">
                 <div class="spinner-border text-light" role="status"></div>

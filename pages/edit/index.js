@@ -6,7 +6,6 @@ import { stockUrls } from '../../modules/stockUrls.js';
 export class EditPage {
     constructor(parent, id) {
         this.parent = parent;
-        // id === null — режим создания новой карточки
         this.id = id !== null && id !== undefined ? Number(id) : null;
         this.isNew = this.id === null;
     }
@@ -20,18 +19,9 @@ export class EditPage {
     }
 
     getFormHTML(data = {}) {
-        const title = data.title || '';
-        const category = data.category || '';
-        const year = data.year || '';
-        const status = data.status || 'Success';
+        const mission_name = data.mission_name || '';
         const description = data.description || '';
-        const fullDescription = data.fullDescription || '';
-        const src = data.src || '';
-
-        const statuses = ['Success', 'Failure', 'Partial'];
-        const statusOptions = statuses
-            .map(s => `<option value="${s}" ${status === s ? 'selected' : ''}>${s}</option>`)
-            .join('');
+        const image = data.image || '';
 
         return `
         <div class="edit-form-wrapper">
@@ -41,7 +31,7 @@ export class EditPage {
                     <div class="edit-img-preview-wrap">
                         <img
                             id="edit-img-preview"
-                            src="${src || 'https://images.unsplash.com/photo-1446776899648-aa78eefe8ed0?w=800&q=85'}"
+                            src="${image || 'https://images.unsplash.com/photo-1446776899648-aa78eefe8ed0?w=800&q=85'}"
                             alt="Mission preview"
                             class="edit-img-preview"
                             onerror="this.src='https://images.unsplash.com/photo-1446776899648-aa78eefe8ed0?w=800&q=85'"
@@ -54,76 +44,35 @@ export class EditPage {
                     <div class="d-flex flex-column gap-3">
 
                         <div>
-                            <label for="edit-title" class="edit-label">Mission Title</label>
+                            <label for="edit-name" class="edit-label">Mission Name</label>
                             <input
                                 type="text"
-                                id="edit-title"
+                                id="edit-name"
                                 class="form-control edit-input"
-                                value="${title}"
-                                placeholder="e.g. Falcon 9 — CRS-26"
+                                value="${mission_name}"
+                                placeholder="e.g. Starlink Group 6-14"
                             />
                         </div>
 
-                        <div class="row g-3">
-                            <div class="col-6">
-                                <label for="edit-category" class="edit-label">Category</label>
-                                <input
-                                    type="text"
-                                    id="edit-category"
-                                    class="form-control edit-input"
-                                    value="${category}"
-                                    placeholder="e.g. Cargo, Crew, Starlink"
-                                />
-                            </div>
-                            <div class="col-3">
-                                <label for="edit-year" class="edit-label">Year</label>
-                                <input
-                                    type="number"
-                                    id="edit-year"
-                                    class="form-control edit-input"
-                                    value="${year}"
-                                    placeholder="2024"
-                                    min="2000"
-                                    max="2100"
-                                />
-                            </div>
-                            <div class="col-3">
-                                <label for="edit-status" class="edit-label">Status</label>
-                                <select id="edit-status" class="form-select edit-input">
-                                    ${statusOptions}
-                                </select>
-                            </div>
-                        </div>
-
                         <div>
-                            <label for="edit-src" class="edit-label">Image URL</label>
+                            <label for="edit-image" class="edit-label">Image URL</label>
                             <input
                                 type="url"
-                                id="edit-src"
+                                id="edit-image"
                                 class="form-control edit-input"
-                                value="${src}"
+                                value="${image}"
                                 placeholder="https://..."
                             />
                         </div>
 
                         <div>
-                            <label for="edit-description" class="edit-label">Short Description</label>
+                            <label for="edit-description" class="edit-label">Description</label>
                             <textarea
                                 id="edit-description"
                                 class="form-control edit-input"
-                                rows="2"
-                                placeholder="Brief summary shown on the card..."
+                                rows="5"
+                                placeholder="Mission description..."
                             >${description}</textarea>
-                        </div>
-
-                        <div>
-                            <label for="edit-full-description" class="edit-label">Full Description</label>
-                            <textarea
-                                id="edit-full-description"
-                                class="form-control edit-input"
-                                rows="4"
-                                placeholder="Detailed mission description..."
-                            >${fullDescription}</textarea>
                         </div>
 
                         <div class="edit-notice">
@@ -138,7 +87,7 @@ export class EditPage {
     }
 
     getData() {
-        ajax.get(stockUrls.getStockById(this.id), (data, status) => {
+        ajax.get(stockUrls.getMissionById(this.id), (data, status) => {
             if (status === 200 && data) {
                 this.renderForm(data);
             } else {
@@ -157,14 +106,14 @@ export class EditPage {
         this.pageRoot.insertAdjacentHTML('beforeend', `
             <div class="mb-4">
                 <p class="page-subtitle">${this.isNew ? 'New Mission' : 'Edit Mission'}</p>
-                <h1 class="page-title">${this.isNew ? 'Add Mission' : (data.title || 'Edit Mission')}</h1>
+                <h1 class="page-title">${this.isNew ? 'Add Mission' : (data.mission_name || 'Edit Mission')}</h1>
             </div>
         `);
 
         this.pageRoot.insertAdjacentHTML('beforeend', this.getFormHTML(data));
 
         // Живое обновление превью при изменении URL картинки
-        document.getElementById('edit-src').addEventListener('input', (e) => {
+        document.getElementById('edit-image').addEventListener('input', (e) => {
             const preview = document.getElementById('edit-img-preview');
             if (preview && e.target.value) preview.src = e.target.value;
         });
@@ -184,10 +133,8 @@ export class EditPage {
         this.parent.insertAdjacentHTML('beforeend', this.getHTML());
 
         if (this.isNew) {
-            // Новая карточка — пустая форма сразу
             this.renderForm({});
         } else {
-            // Редактирование — загружаем данные по API
             this.pageRoot.innerHTML = `
                 <div class="text-center py-5">
                     <div class="spinner-border text-light" role="status"></div>

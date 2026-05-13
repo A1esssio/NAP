@@ -1,27 +1,27 @@
-class StockUrls {
+class MissionUrls {
     constructor() {
         this.baseUrl = 'http://localhost:3000';
     }
 
-    getStocks() {
-        return `${this.baseUrl}/stocks`;
+    getMissions() {
+        return `${this.baseUrl}/missions`;
     }
 
-    getStockById(id) {
-        return `${this.baseUrl}/stocks/${id}`;
+    getMissionById(id) {
+        return `${this.baseUrl}/missions/${id}`;
     }
 
-    createStock() {
-        return `${this.baseUrl}/stocks`;
+    createMission() {
+        return `${this.baseUrl}/missions`;
     }
 
-    removeStockById(id) {
-        return `${this.baseUrl}/stocks/${id}`;
+    removeMissionById(id) {
+        return `${this.baseUrl}/missions/${id}`;
     }
 
-    updateStockById(id) {
-        return `${this.baseUrl}/stocks/${id}`;
+    updateMissionById(id) {
+        return `${this.baseUrl}/missions/${id}`;
     }
 }
 
-export const stockUrls = new StockUrls();
+export const stockUrls = new MissionUrls();
