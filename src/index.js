@@ -15,11 +15,14 @@ app.use(express.json());
 
 // 2. CORS
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
-    res.header("Access-Control-Allow-Headers", "Content-Type");
-    if (req.method === "OPTIONS") return res.sendStatus(200);
-    next();
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PATCH, DELETE, OPTIONS",
+  );
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  if (req.method === "OPTIONS") return res.sendStatus(200);
+  next();
 });
 
 // 3. Раздача собранного фронтенда (папка public из ЛР6)
@@ -27,33 +30,33 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 
 // 4. Logging middleware
 function loggingMiddleware(req, res, next) {
-    const timestamp = new Date().toISOString();
-    console.log(`[${timestamp}] ${req.method} ${req.originalUrl}`);
-    next();
+  const timestamp = new Date().toISOString();
+  console.log(`[${timestamp}] ${req.method} ${req.originalUrl}`);
+  next();
 }
 app.use(loggingMiddleware);
 
 // 5. Роуты миссий
-app.use("/api/missions", missionsRouter);
+app.use("/missions", missionsRouter);
 
 // 6. 404 handler
 function notFoundHandler(req, res) {
-    res
-        .status(404)
-        .json({ error: `Маршрут ${req.method} ${req.originalUrl} не найден` });
+  res
+    .status(404)
+    .json({ error: `Маршрут ${req.method} ${req.originalUrl} не найден` });
 }
 app.use(notFoundHandler);
 
 // 7. Error handler
 function errorHandler(err, req, res, next) {
-    console.error("[ERROR]", err.message);
-    res
-        .status(500)
-        .json({ error: "Внутренняя ошибка сервера", details: err.message });
+  console.error("[ERROR]", err.message);
+  res
+    .status(500)
+    .json({ error: "Внутренняя ошибка сервера", details: err.message });
 }
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-    console.log(`🚀 SpaceX API запущен на http://localhost:${PORT}`);
-    console.log(`📄 Данные читаются из: ${DATA_FILE}`);
+  console.log(`SpaceX API запущен на http://localhost:${PORT}`);
+  console.log(`Данные читаются из: ${DATA_FILE}`);
 });

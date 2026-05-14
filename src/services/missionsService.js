@@ -19,6 +19,13 @@ function findOne(id) {
   return missions.find((m) => m.id === id) || null;
 }
 
+function findByDescription(description) {
+  const missions = readData(dataFilePath);
+  return missions.filter((m) =>
+    m.description.toLowerCase().includes(description.toLowerCase())
+  );
+}
+
 function create(missionData) {
   const missions = readData(dataFilePath);
   const maxId = missions.length > 0 ? Math.max(...missions.map((m) => m.id)) : 0;
@@ -39,11 +46,11 @@ function update(id, data) {
 
 function remove(id) {
   const missions = readData(dataFilePath);
-  const index = missions.findIndex((m) => m.id === id);
+  const index = missions.findIndex((m) => m.id === id)
   if (index === -1) return false;
   missions.splice(index, 1);
   writeData(dataFilePath, missions);
   return true;
 }
 
-module.exports = { init, findAll, findOne, create, update, remove };
+module.exports = { init, findAll, findOne, findByDescription, create, update, remove };
