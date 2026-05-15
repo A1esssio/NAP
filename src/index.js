@@ -37,7 +37,7 @@ function loggingMiddleware(req, res, next) {
 app.use(loggingMiddleware);
 
 // 5. Роуты миссий
-app.use("/missions", missionsRouter);
+app.use("/api/missions", missionsRouter);
 
 // 6. 404 handler
 function notFoundHandler(req, res) {
